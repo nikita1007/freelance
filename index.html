@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Приглашение на свадьбу</title>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond&display=swap" rel="stylesheet">
+
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        background-color: #000;
+        overflow: hidden;
+        position: relative;
+      }
+      html {
+        font-size: 10px;
+      }
+      img {
+        height: 100vh;
+        width: 100%;
+        object-fit: contain;
+      }
+
+      .mainCard {
+        height: 100vh;
+        width: auto;
+      }
+      .mainCard div {
+        height: 100%;
+        position: relative;
+      }
+      .mainCard div button {
+        display: inline-block;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        border: 1px solid #BDA654;
+        color: #BDA654;
+        padding: 5px;
+        background-color: transparent;
+        outline: none;
+        cursor: pointer;
+        transition: .2s;
+
+        font-family: EB Garamond;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 20px;
+      }
+      .mainCard button:hover {
+        color: #fff;
+        background-color: #BDA654;
+      }
+
+      .flipCards {
+        position: absolute;
+        width: 100%;
+        height: 100vh;
+      }
+      .flip-box-inner {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        transition: transform 0.8s;
+        transform-style: preserve-3d;
+      }
+      .flip-box-front, .flip-box-back {
+        position: absolute;
+        width: 100%;
+        height: 100vh;
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        cursor: pointer;
+      }
+      .flip-box-back {
+        /* transform: rotateY(180deg); */
+      }
+      #form {
+        position: absolute;
+        left: 50%;
+        bottom: 15px;
+        transform: translateX(-50%);
+      }
+
+      @media (max-width: 768px) {
+        .mainCard div button {
+          font-size: 18px;
+        }
+      }
+      @media (max-width: 425px) {
+        .mainCard div button {
+          padding: 4px;
+          font-size: 16px;
+        }
+      }
+      @media (max-width: 375px) {
+        .mainCard div button {
+          font-size: 14px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <!-- <div class="mainCard">
+        <div>
+          <img id="mainImg" src="img/1.jpg" alt="">
+          <button id="openInvite" type="button">Открыть приглашение</button>
+        </div>
+      </div> -->
+      <div class="flipCards">
+        <div class="flip-box-inner">
+          <!-- <div class="flip-box-front">
+            <img src="img/2.jpg" alt="">
+          </div> -->
+          <div class="flip-box-back">
+            <img src="img/3.jpg" alt="">
+            <form id="form" action="mail.php">
+              <input type="button" value="ПРИДУ">
+              <input type="button" value="НЕ ПРИДУ">
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const openInvite = document.querySelector("#openInvite");
+      const mainImg = document.getElementById("mainImg");
+
+      if (document.body.offsetWidth >= 1024) {
+        openInvite.style.cssText = `top: ${mainImg.offsetHeight - 180}px`;
+      }
+      else if (document.body.offsetWidth <= 1024 && document.body.offsetWidth >= 768) {
+        openInvite.style.cssText = `top: ${mainImg.offsetHeight - 170}px`;
+      }
+      else if (document.body.offsetWidth <= 768 && document.body.offsetWidth >= 600) {
+        openInvite.style.cssText = `top: ${mainImg.offsetHeight - 175}px`;
+      }
+      else if (document.body.offsetWidth <= 600 && document.body.offsetWidth >= 425) {
+        openInvite.style.cssText = `top: ${mainImg.offsetHeight - 195}px`;
+      }
+      else if (document.body.offsetWidth <= 425 && document.body.offsetWidth >= 375) {
+        openInvite.style.cssText = `top: ${mainImg.offsetHeight - 205}px`;
+      }
+      else if (document.body.offsetWidth === 320) {
+        openInvite.style.cssText = `top: ${mainImg.offsetHeight - 240}px`;
+      }
+      else if (document.body.offsetWidth <= 375 && document.body.offsetWidth >= 320) {
+        openInvite.style.cssText = `top: ${mainImg.offsetHeight - 220}px`;
+      }
+    
+    </script>
+  </body>
+</html>
