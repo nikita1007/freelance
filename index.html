@@ -22,13 +22,25 @@
         font-size: 10px;
       }
       img {
+        width: 100%;
         height: 100vh;
         object-fit: contain;
       }
 
-      .mainCard {
+      .page {
+        position: relative;
+        width: 100%;
+        height: 100vh;
+      }
+      .mainCard,
+      .flipCards {
         height: 100vh;
         width: auto;
+        transition: .15s;
+      }
+      .flipCards {
+        opacity: 0;
+        display: none;
       }
       .mainCard div {
         height: 100%;
@@ -57,12 +69,10 @@
         background-color: #BDA654;
       }
 
-      .flipCards {
-        position: absolute;
-        width: 100%;
-        height: 100vh;
-      }
       .flip-box-inner {
+        display: flex;
+        justify-content: center;
+        align-items: center;
         position: relative;
         width: 100%;
         height: 100vh;
@@ -75,19 +85,45 @@
         backface-visibility: hidden;
         cursor: pointer;
       }
+      .flip-box-back div {
+        position: relative;
+      }
       .flip-box-back {
-        /* transform: rotateY(180deg); */
+        transform: rotateY(180deg);
       }
       #form {
+        width: 50%;
+        display: flex;
+        column-gap: 200px;
         position: absolute;
         left: 50%;
         bottom: 15px;
         transform: translateX(-50%);
       }
+      input {
+        background-color: transparent;
+        border: 1px solid #BDA654;
+        color: #BDA654;
+        padding: 5px 10px;
+        font-size: 18px;
+        cursor: pointer;
+        transition: .2s;
+      }
+      input:hover {
+        color: #000;
+        background-color: #BDA654;
+      }
 
       @media (max-width: 768px) {
         .mainCard div button {
           font-size: 18px;
+        }
+        .flip-box-front, .flip-box-back {
+          width: 100%;
+          height: auto;
+        }
+        #form {
+          bottom: 25%;
         }
       }
       @media (max-width: 425px) {
@@ -105,30 +141,35 @@
   </head>
   <body>
     <div class="page">
-      <!-- <div class="mainCard">
-        <div>
-          <img id="mainImg" src="img/1.jpg" alt="">
-          <button id="openInvite" type="button">Открыть приглашение</button>
-        </div>
-      </div> -->
       <div class="flipCards">
         <div class="flip-box-inner">
-          <div class="flip-box-front">
+          <div class="flip-box-front active">
             <img src="img/2.jpg" alt="">
           </div>
           <div class="flip-box-back">
-            <img src="img/3.jpg" alt="">
-            <form id="form" action="mail.php">
-              <input type="button" value="ПРИДУ">
-              <input type="button" value="НЕ ПРИДУ">
-            </form>
+            <div>
+              <img src="img/3.jpg" alt="">
+              <form id="form" action="mailto:n_mancurov@mail.ru" method="POST" enctype="text/plain">
+                <input type="submit" value="ПРИДУ">
+                <input type="submit" value="НЕ ПРИДУ">
+              </form>
+            </div>
           </div>
+        </div>
+      </div>
+      <div class="mainCard">
+        <div>
+          <img id="mainImg" src="img/1.jpg" alt="">
+          <button id="openInvite" type="button">Открыть приглашение</button>
         </div>
       </div>
     </div>
 
     <script>
       const openInvite = document.querySelector("#openInvite");
+      const mainCard = document.querySelector(".mainCard");
+      const flipboxinner = document.querySelector(".flip-box-inner");
+      const flipCards = document.querySelector(".flipCards");
       const mainImg = document.getElementById("mainImg");
 
       if (document.body.offsetWidth >= 1024) {
@@ -153,6 +194,25 @@
         openInvite.style.cssText = `top: ${mainImg.offsetHeight - 220}px`;
       }
     
+      openInvite.addEventListener('click', function(){
+        mainCard.style.cssText = "display:none;opacity:0;";
+        flipCards.style.cssText = "display:block;opacity:1;";
+      });
+      flipboxinner.addEventListener('click', function() { 
+        switch (document.querySelector(".flip-box-front").classList.contains('active')) {
+          case true:
+            flipboxinner.style.cssText = `transform: rotateY(180deg);`;
+            document.querySelector(".flip-box-front").classList.remove('active');
+            document.querySelector(".flip-box-back").classList.add('active');
+            break;
+        
+          case false:
+            flipboxinner.style.cssText = `transform: rotateY(0deg);`;
+            document.querySelector(".flip-box-front").classList.add('active');
+            document.querySelector(".flip-box-back").classList.remove('active');
+            break;
+        }
+      });
     </script>
   </body>
 </html>
