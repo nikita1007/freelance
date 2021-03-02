@@ -12,12 +12,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
 
     <style>
+      *, *:before, *:after {
+        box-sizing: border-box;
+      }
       body {
+        overflow-x: hidden;
         margin: 0;
         padding: 0;
-        box-sizing: border-box;
         background-color: #000;
-        overflow-x: hidden;
+        overflow: hidden;
         position: relative;
       }
       html {
@@ -83,7 +86,7 @@
         backface-visibility: hidden;
       }
       #form {
-        width: calc(100% - 40px);
+        width: 100%;
         display: flex;
         justify-content: space-between;
         position: absolute;
@@ -120,15 +123,18 @@
         position: absolute;
         top: 50%;
         left: 10px;
+        width: 30px;
+        height: 30px;
         transform: translateY(-50%);
         font-size: 20px;
         color: black;
         display: inline-block;
-        width: 20px;
-        height: 20px;
         padding: 5px;
         border: 1px solid #000;
         border-radius: 50%;
+      }
+      .secondBlockInner a i {
+        transform: translateY(-2px);
       }
       #arrow-right {
         right: 15px;
@@ -138,14 +144,13 @@
         transform: rotateY(180deg) translateX(50%);
       }
 
-      @media (max-width: 548px) {
+      @media (max-width: 813px) {
         body {
           position: relative;
         }
         .firstBlockWrapper, .secondBlockWrapper {
           width: 100%;
           height: auto;
-          margin-top: 5%;
         }
         img {
           width: 100vw;
@@ -162,19 +167,20 @@
         #openInvite {
           font-size: 20px;
         }
+        input {
+          padding: 4px 8px;
+          font-size: 16px;
+        }
       }
       @media (max-width: 425px) {
         #openInviten {
           padding: 4px;
           font-size: 16px;
         }
-        .firstBlockWrapper, .secondBlockWrapper {
-          margin-top: 10%;
-        }
         .secondBlockInner a {
           font-size: 14px;
-          width: 12px;
-          height: 12px;
+          width: 20px;
+          height: 20px;
           padding: 3px;
           border-radius: 50%;
         }
@@ -182,13 +188,40 @@
           transform: translateY(-1px);
         }
       }
+      @media (max-width: 401px) {
+        #openInvite {
+          font-size: 14px;
+          bottom: 17%;
+        }
+      }
       @media (max-width: 375px) {
         #openInvite {
           font-size: 14px;
           bottom: 17%;
         }
-        .firstBlockWrapper, .secondBlockWrapper {
-          margin-top: 20%;
+      }
+      @media (max-height: 565px) {
+        #openInvite {
+          font-size: 14px;
+          bottom: 18%;
+        }
+      }
+      @media (max-height: 406px) {
+        #openInvite {
+          font-size: 12px;
+          bottom: 18%;
+        }
+      }
+      @media (max-height: 353px) {
+        #openInvite {
+          font-size: 10px;
+          bottom: 18%;
+        }
+      }
+      @media (max-height: 300px) {
+        #openInvite {
+          font-size: 8px;
+          bottom: 18%;
         }
       }
 
@@ -230,19 +263,42 @@
       const flipCards = document.querySelector(".secondBlockWrapper");
       const mainImg = document.getElementById("mainImg");
     
+      let margintop = (document.documentElement.clientHeight - document.querySelector(".firstBlockWrapper").offsetHeight)/2;
+
+      if (document.documentElement.clientWidth < 813) {
+        mainCard.style.cssText = `margin-top: ${margintop}px`;
+        flipCards.style.cssText = `margin-top: ${margintop}px`;
+      }
+      window.addEventListener('resize', ()=> {
+        if (document.documentElement.clientWidth < 813) {
+          margintop = (document.documentElement.clientHeight - document.querySelector(".firstBlockWrapper").clientHeight)/2
+          mainCard.style.cssText += `margin-top: ${margintop}px`;
+          flipCards.style.cssText += `margin-top: ${margintop}px`;
+          console.log(1);
+        } else {
+          mainCard.style.cssText += `margin-top: 0px`;
+          flipCards.style.cssText += `margin-top: 0px`;
+        }
+      });
+
       openInvite.addEventListener('click', function(){
-        mainCard.style.cssText = "opacity:0;";
-        flipCards.style.cssText = "opacity:1;";
+        if (document.querySelector('body').clientWidth < 813) {
+          mainCard.style.cssText += `opacity:0;margin-top: ${margintop}px`;
+          flipCards.style.cssText += `opacity:1;margin-top: ${margintop}px`;
+        } else {
+          mainCard.style.cssText += `opacity:0`;
+          flipCards.style.cssText += `opacity:1`;
+        }
         setTimeout(function() { 
-          mainCard.style.cssText = "display:none;";
+          mainCard.style.cssText += "display:none;";
         }, 600)
       });
 
       document.querySelector('#arrow-right').addEventListener('click', function() { 
-        flipboxinner.style.cssText = `transform: rotateY(180deg);`;
+        flipboxinner.style.cssText += `transform: rotateY(180deg);`;
       });
       document.querySelector('#arrow-left').addEventListener('click', function() { 
-        flipboxinner.style.cssText = `transform: rotateY(0deg);`;
+        flipboxinner.style.cssText += `transform: rotateY(0deg);`;
       });
       for (let i = 0; i < document.querySelectorAll('input').length; i++) {
         document.querySelectorAll('input')[i].addEventListener('click', ()=> {
