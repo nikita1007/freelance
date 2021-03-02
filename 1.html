@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Приглашение на свадьбу</title>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/duotone.css" integrity="sha384-R3QzTxyukP03CMqKFe0ssp5wUvBPEyy9ZspCB+Y01fEjhMwcXixTyeot+S40+AjZ" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/fontawesome.css" integrity="sha384-eHoocPgXsiuZh+Yy6+7DsKAerLXyJmu2Hadh4QYyt+8v86geixVYwFqUvMU8X90l" crossorigin="anonymous"/>
+
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        background-color: #000;
+        position: relative;
+      }
+      html {
+        font-size: 10px;
+      }
+      img {
+        width: 100%;
+        height: 100vh;
+        object-fit: contain;
+      }
+
+      .page {
+        overflow-x: hidden;
+        position: relative;
+        width: 100%;
+        height: 100vh;
+      }
+      
+      .mainCard,
+      .flip-box-inner div {
+        position: absolute;
+      }
+      .mainCard {
+        width: fit-content;
+        margin: 0 auto;
+      }
+      #openInvite {
+        display: inline-block;
+        position: absolute;
+        bottom: 20%;
+        left: 50%;
+        transform: translateX(-50%);
+        border: 1px solid #BDA654;
+        color: #BDA654;
+        padding: 5px;
+        background-color: transparent;
+        outline: none;
+        cursor: pointer;
+        transition: .2s;
+
+        font-family: EB Garamond;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 20px;
+      }
+      #openInvite:hover {
+        color: #fff;
+        background-color: #BDA654;
+      }
+
+      .flipCards {
+        display: none;
+        opacity:0;
+      }
+      .flip-box-back div {
+        width: fit-content;
+        position: relative;
+      }
+      #form {
+        position: absolute;
+        display: flex;
+        column-gap: 200px;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: 70px;
+      }
+      input {
+        background-color: transparent;
+        border: 1px solid #BDA654;
+        color: #BDA654;
+        padding: 5px 10px;
+        font-size: 18px;
+        cursor: pointer;
+        transition: .2s;
+        outline: none;
+      }
+      input:hover {
+        color: #000;
+        background-color: #BDA654;
+      }
+
+      .flip-box-inner {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        width: 100%;
+        height: 100vh;
+        transition: transform 1.2s;
+        transform-style: preserve-3d;
+      }
+      .flip-box-front, .flip-box-back {
+        backface-visibility: hidden;
+      }
+      .flip-box-back {
+        transform: rotateY(180deg);
+      }
+
+      @media screen and (max-width: 1024px){
+        #form {
+          column-gap: 120px;
+        }
+        input {
+          font-size: 16px;
+        }
+      }
+      @media (max-width: 768px) {
+        img {
+          height: auto;
+        }
+        #openInvite {
+          font-size: 20px;
+        }
+        input {
+          font-size: 16px;
+        }
+        #form {
+          column-gap: 35vw;
+        }
+      }
+      @media (max-width: 460px) {
+        .mainCard,
+        .flipCards {
+          padding-top: 5%;
+        }
+        body {
+          overflow: hidden;
+        }
+      }
+      @media (max-width: 425px) {
+        #openInviten {
+          padding: 4px;
+          font-size: 16px;
+        }
+        input {
+          font-size: 14px;
+        }
+      }
+      @media (max-width: 375px) {
+        #openInvite {
+          font-size: 14px;
+          bottom: 17%;
+        }
+        .mainCard,
+        .flipCards {
+          padding-top: 20%;
+        }
+      }
+      @media (max-width: 320px) {
+        .mainCard,
+        .flipCards {
+          padding-top: 30%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <div class="mainCard">
+        <img src="img/1.jpg" alt="">
+        <button id="openInvite" type="button">Открыть приглашение</button>
+      </div>
+      <div class="flipCards">
+        <div class="flip-box-inner">
+          <div class="flip-box-front active">
+            <img src="img/2.jpg" alt="">
+          </div>
+          <div class="flip-box-back">
+            <div>
+              <img src="img/3.jpg" alt="">
+              <form id="form" action="mailto:n_mancurov@mail.ru" method="POST" enctype="text/plain">
+                <input type="submit" value="ПРИДУ">
+                <input type="submit" value="НЕ ПРИДУ">
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const mainCard = document.querySelector('.mainCard');
+      const flipCards = document.querySelector('.flipCards');
+      const openInvite = document.querySelector('#openInvite');
+      const flipboxinner = document.querySelector('.flip-box-inner');
+
+      openInvite.addEventListener('click', function(){
+        mainCard.style.cssText = "display:none;opacity:0;";
+        flipCards.style.cssText = "display:block;opacity:1;";
+      });
+      flipboxinner.addEventListener('click', function() { 
+        switch (document.querySelector(".flip-box-front").classList.contains('active')) {
+          case true:
+            flipboxinner.style.cssText = `transform: rotateY(180deg);`;
+            document.querySelector(".flip-box-front").classList.remove('active');
+            document.querySelector(".flip-box-back").classList.add('active');
+            break;
+        
+          case false:
+            flipboxinner.style.cssText = `transform: rotateY(0deg);`;
+            document.querySelector(".flip-box-front").classList.add('active');
+            document.querySelector(".flip-box-back").classList.remove('active');
+            break;
+        }
+      });
+    </script>
+  </body>
+</html>
