@@ -43,6 +43,8 @@
       }
       .secondBlockWrapper {
         z-index: 1;
+        opacity: 0;
+        transition: .3s;
       }
       #openInvite {
         display: inline-block;
@@ -230,9 +232,9 @@
     
       openInvite.addEventListener('click', function(){
         mainCard.style.cssText = "opacity:0;";
+        flipCards.style.cssText = "opacity:1;";
         setTimeout(function() { 
           mainCard.style.cssText = "display:none;";
-          flipCards.style.cssText = "opacity:1;";
         }, 600)
       });
 
