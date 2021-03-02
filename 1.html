@@ -9,8 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=EB+Garamond&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/duotone.css" integrity="sha384-R3QzTxyukP03CMqKFe0ssp5wUvBPEyy9ZspCB+Y01fEjhMwcXixTyeot+S40+AjZ" crossorigin="anonymous"/>
-    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/fontawesome.css" integrity="sha384-eHoocPgXsiuZh+Yy6+7DsKAerLXyJmu2Hadh4QYyt+8v86geixVYwFqUvMU8X90l" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
 
     <style>
       body {
@@ -31,18 +30,18 @@
 
       .page {
         overflow-x: hidden;
-        position: relative;
+        position: absolute;
         width: 100%;
         height: 100vh;
       }
       
       .mainCard,
-      .flip-box-inner div {
-        position: absolute;
+      .flipCards {
+        position: relative;
+        left: 50%;
+        transform:translateX(-50%);
       }
       .mainCard {
-        width: fit-content;
-        margin: 0 auto;
       }
       #openInvite {
         display: inline-block;
@@ -82,7 +81,7 @@
         column-gap: 200px;
         left: 50%;
         transform: translateX(-50%);
-        bottom: 70px;
+        bottom: 8%;
       }
       input {
         background-color: transparent;
@@ -111,9 +110,33 @@
       }
       .flip-box-front, .flip-box-back {
         backface-visibility: hidden;
+        position: relative;
+      }
+      .flip-box-front {
+        left: 50%;
+        transform: translateX(-50%);
       }
       .flip-box-back {
-        transform: rotateY(180deg);
+        right: 50%;
+        transform: translateX(50%) rotateY(180deg);
+      }
+
+      .flip-box-inner a {
+        position: absolute;
+        top: 50%;
+        font-size: 22px;
+        color: #000;
+      }
+      #arrow-left {
+        left: 2.5%;
+      }
+      #arrow-right {
+        right: 2.5%;
+      }
+      span {
+        display: inline-block;
+        opacity: 0;
+        font-size: 1.8rem;
       }
 
       @media screen and (max-width: 1024px){
@@ -137,10 +160,20 @@
         #form {
           column-gap: 35vw;
         }
+        .flip-box-front, .flip-box-back {
+          position: absolute;
+          right: 0; left: 0;
+          transform: translate(0%,0%);
+        }
+        .flip-box-back {
+          transform: rotateY(180deg);
+        }
       }
       @media (max-width: 460px) {
         .mainCard {
-          padding-top: 5px;
+          left: 0;
+          top: 50%;
+          transform: translateY(-50%);
         }
         body {
           overflow: hidden;
@@ -163,10 +196,16 @@
         .mainCard {
           padding-top: 10%;
         }
+        .flip-box-inner a {
+          font-size: 18px;
+        }
       }
       @media (max-width: 320px) {
         .mainCard {
           padding-top: 25%;
+        }
+        .flip-box-inner a {
+          font-size: 16px;
         }
       }
     </style>
@@ -181,13 +220,21 @@
         <div class="flip-box-inner">
           <div class="flip-box-front active">
             <img src="img/2.jpg" alt="">
+            <a id="arrow-right" href="#"><i class="fas fa-arrow-right"></i></a>
           </div>
           <div class="flip-box-back">
             <div>
+              <a id="arrow-left" href="#"><i class="fas fa-arrow-left"></i></a>
               <img src="img/3.jpg" alt="">
               <form id="form" action="mailto:n_mancurov@mail.ru" method="POST" enctype="text/plain">
-                <input type="submit" value="ПРИДУ">
-                <input type="submit" value="НЕ ПРИДУ">
+                <div>
+                  <input type="submit" value="ПРИДУ">
+                  <span class="answer"> спасибо за ответ!</span>
+                </div>
+                <div>
+                  <input type="submit" value="НЕ ПРИДУ">
+                  <span class="answer"> спасибо за ответ!</span>
+                </div>
               </form>
             </div>
           </div>
@@ -201,25 +248,25 @@
       const openInvite = document.querySelector('#openInvite');
       const flipboxinner = document.querySelector('.flip-box-inner');
 
+      const arrowleft = document.querySelector('#arrow-left');
+      const arrowright = document.querySelector('#arrow-right');
+
       openInvite.addEventListener('click', function(){
         mainCard.style.cssText = "display:none;opacity:0;";
         flipCards.style.cssText = "display:block;opacity:1;";
       });
-      flipboxinner.addEventListener('click', function() { 
-        switch (document.querySelector(".flip-box-front").classList.contains('active')) {
-          case true:
-            flipboxinner.style.cssText = `transform: rotateY(180deg);`;
-            document.querySelector(".flip-box-front").classList.remove('active');
-            document.querySelector(".flip-box-back").classList.add('active');
-            break;
-        
-          case false:
-            flipboxinner.style.cssText = `transform: rotateY(0deg);`;
-            document.querySelector(".flip-box-front").classList.add('active');
-            document.querySelector(".flip-box-back").classList.remove('active');
-            break;
-        }
+
+      arrowright.addEventListener('click', function() { 
+        flipboxinner.style.cssText = `transform: rotateY(180deg);`;
       });
+      arrowleft.addEventListener('click', function() { 
+        flipboxinner.style.cssText = `transform: rotateY(0deg);`;
+      });
+      for (let i = 0; i < document.querySelectorAll('input').length; i++) {
+        document.querySelectorAll('input')[i].addEventListener('click', ()=> {
+          document.querySelectorAll('.answer')[i].style.cssText = 'opacity: 1;';
+        });
+      }
     </script>
   </body>
 </html>
