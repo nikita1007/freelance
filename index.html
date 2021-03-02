@@ -36,9 +36,13 @@
         left: 50%;
         transform: translateX(-50%);
         position: absolute;
+        transition: .6s;
+      }
+      .firstBlockWrapper {
+        z-index: 2;
       }
       .secondBlockWrapper {
-        display: none;
+        z-index: 1;
       }
       #openInvite {
         display: inline-block;
@@ -67,7 +71,7 @@
         height: 100vh;
         width: fit-content;
         position: relative;
-        transition: transform 1.2s;
+        transition: transform 1.5s;
         transform-style: preserve-3d;
       }
       .imgOne,
@@ -225,8 +229,11 @@
       const mainImg = document.getElementById("mainImg");
     
       openInvite.addEventListener('click', function(){
-        mainCard.style.cssText = "display:none;opacity:0;";
-        flipCards.style.cssText = "display:block;opacity:1;";
+        mainCard.style.cssText = "opacity:0;";
+        setTimeout(function() { 
+          mainCard.style.cssText = "display:none;";
+          flipCards.style.cssText = "opacity:1;";
+        }, 600)
       });
 
       document.querySelector('#arrow-right').addEventListener('click', function() { 
